@@ -98,6 +98,14 @@ img {
     color: var(--primary);
 }
 
+.slider-figure {
+    margin-right: 2rem;
+}
+
+.slider-figure > img {
+    width: 200px;
+}
+
 .slider-button {
     width: 8em;
     height: 3em;
