@@ -56,12 +56,12 @@ class ShoppingPage {
         this.topBox = document.getElementById("topBox");
         this.topItems = db.filter(e => e.top);
         this.featuredBox = document.getElementById("featuredBox");
-        this.populate_slider();
-        this.populate_top();
-        this.populate_featured();
+        this.populateSlider();
+        this.populateTop();
+        this.populateFeatured();
     }
 
-    populate_slider() {
+    populateSlider() {
         let item = this.topItems[0];
         document.getElementById("sliderFigure").innerHTML = `
             <img src="${item.img}" alt="${item.name}" class="img-fluid slider-img">`;
@@ -78,7 +78,7 @@ class ShoppingPage {
             </ul>`;
     }
 
-    populate_top() {
+    populateTop() {
         this.topItems.forEach((e) => {
             this.topBox.insertAdjacentHTML('beforeend', `
                 <figure class="product-top">
@@ -91,7 +91,7 @@ class ShoppingPage {
         });
     }
 
-    populate_featured() {
+    populateFeatured() {
         return;
     }
 }
