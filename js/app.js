@@ -79,7 +79,16 @@ class ShoppingPage {
     }
 
     populate_top() {
-        return;
+        this.topItems.forEach((e) => {
+            this.topBox.insertAdjacentHTML('beforeend', `
+                <figure class="product-top">
+                    <img src="${e.img}" alt="${e.name}" class="img-fluid">
+                    <figcaption>
+                        ${e.name}
+                        <button>shop</button>
+                    </figcaption>
+                </figure>`);
+        });
     }
 
     populate_featured() {
