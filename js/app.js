@@ -56,6 +56,7 @@ class ShoppingPage {
         this.topBox = document.getElementById("topBox");
         this.topItems = db.filter(e => e.top);
         this.featuredBox = document.getElementById("featuredBox");
+        this.cart = [];
         this.populateSlider();
         this.populateTop();
         this.populateFeatured();
@@ -92,7 +93,26 @@ class ShoppingPage {
     }
 
     populateFeatured() {
-        return;
+        db.forEach((e) => {
+            this.featuredBox.insertAdjacentHTML('beforeend', `
+                <figure class="featured-product">
+                    <img src="${e.img}" alt="${e.name}" class="img-fluid">
+                    <figcaption>
+                        ${e.name}
+                        <div class="price">
+                            ${e.price}
+                            <button data-id=${e.id}>buy now</button>
+                        </div>
+                    </figcaption>
+                </figure>
+            `);
+            this.featuredBox.querySelector('figure:last-child .price button')
+                .addEventListener('click', this.addItem.bind(this));
+        });
+    }
+
+    addItem(event) {
+        console.log(`clicked ${event.target.dataset.id}`);
     }
 }
 
