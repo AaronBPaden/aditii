@@ -4,7 +4,7 @@ const db = [
         id: 0,
         name: "Blue and Green Bag",
         desc: "It's a store item",
-        price: 129.99,
+        price: 119.99,
         img: "media/blue-and-green-bag.jpg",
         top: true,
     },
@@ -20,7 +20,7 @@ const db = [
         id: 2,
         name: "Brown Suede Shoes",
         desc: "It's a store item",
-        price: 129.99,
+        price: 139.99,
         img: "media/brown-suede-shoes.jpg",
         top: true,
     },
@@ -28,7 +28,7 @@ const db = [
         id: 3,
         name: "Roy Bjorkman Fur Coat",
         desc: "It's a store item",
-        price: 129.99,
+        price: 149.99,
         img: "media/roy-bjorkman-fur-coat.jpg",
         top: false,
     },
@@ -36,7 +36,7 @@ const db = [
         id: 4,
         name: "Steeplechase Hat",
         desc: "It's a store item",
-        price: 129.99,
+        price: 159.99,
         img: "media/steeplechase-hat.jpg",
         top: true,
     },
@@ -44,7 +44,7 @@ const db = [
         id: 5,
         name: "Shoes",
         desc: "It's a store item",
-        price: 129.99,
+        price: 169.99,
         img: "media/shoes.jpg",
         top: false,
     },
@@ -72,7 +72,7 @@ class ShoppingPage {
         sliderBox.innerHTML = `
             <h2 class="slider-title">${item.name}</h2>
             <p class="slider-text">${item.desc}</p>
-            <button class="slider-button">shop now</button>
+            <button class="slider-button" data-id="${item.id}">shop now</button>
             <ul class="slider-button-list">
                 <li class="slider-button-item"><input type="radio" class="slider-radio" name="slider" value="" checked></li>
                 <li class="slider-button-item"><input type="radio" class="slider-radio" name="slider" value=""></li>
@@ -80,6 +80,8 @@ class ShoppingPage {
                 <li class="slider-button-item"><input type="radio" class="slider-radio" name="slider" value=""></li>
                 <li class="slider-button-item"><input type="radio" class="slider-radio" name="slider" value=""></li>
             </ul>`;
+            this.sliderBox.querySelector('.slider-button')
+                .addEventListener('click', this.addItem.bind(this));
     }
 
     populateTop() {
@@ -89,9 +91,11 @@ class ShoppingPage {
                     <img src="${e.img}" alt="${e.name}" class="img-fluid">
                     <figcaption>
                         ${e.name}
-                        <button>add to cart</button>
+                        <button data-id="${e.id}">add to cart</button>
                     </figcaption>
                 </figure>`);
+            this.topBox.querySelector('figure:last-child button')
+                .addEventListener('click', this.addItem.bind(this));
         });
     }
 
