@@ -57,7 +57,8 @@ class ShoppingPage {
         this.topItems = db.filter(e => e.top);
         this.featuredBox = document.getElementById("featuredBox");
         this.cartTotal = document.getElementById("cartTotal");
-        this.cartTotal.innerText = "$0";
+        this.subtotal = 0;
+        this.cartTotal.innerText = "$0.00";
         this.cart = [];
         this.populateSlider();
         this.populateTop();
@@ -133,6 +134,13 @@ class ShoppingPage {
                 console.log("error in addItem: multiple duplicates in cart.");
                 break;
         }
+        let subtotal = 0;
+        this.cart.forEach((e) => {
+            let price = db[e.id].price;
+            subtotal += price*e.qty;
+        });
+        this.cartTotal.innerText = subtotal.toFixed(2);
+        this.subtotal = subtotal;
     }
 }
 
