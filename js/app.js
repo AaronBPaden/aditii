@@ -50,6 +50,49 @@ const db = [
     },
 ];
 
+class Checkout {
+    constructor() {
+        this.checkoutBox = document.getElementById("checkoutBox");
+        this.checkoutList = document.getElementById("checkoutList");
+        this.closeCheckout = document.getElementById("closeCheckout");
+        this.subtotalSpan = document.getElementById("subtotalSpan");
+        this.taxSpan = document.getElementById("taxSpan")
+        this.totalSpan = document.getElementById("totalSpan");
+
+        this.closeCheckout.addEventListener("click", this.onClose.bind(this));
+    }
+
+    populateCart(cart) {
+        let subtotal = 0;
+        cart.forEach((e) => {
+            let item = db[e.id];
+            this.checkoutList.insertAdjacentHTML('beforeend', `
+                <li class="checkout-list-item">
+                    <figure>
+                        <img src="${item.img}" alt="${item.name}" class="img-fluid checkout-item-img">
+                        <figcaption>
+                            <span class="checkout-span-name">${item.name}</span>
+                        </figcaption>
+                    </figure>
+                    <span class="checkout-span-quantity">${e.qty}</span>
+                    <span class="checkout-span-price">${(item.price*e.qty).toFixed(2)}</span>
+                </li>`);
+            subtotal += item.price * e.qty;
+        });
+        this.subtotalSpan.innerText = subtotal.toFixed(2);
+        let tax = subtotal*0.07;
+        this.taxSpan.innerText = tax.toFixed(2);
+        this.totalSpan.innerText = (subtotal+tax).toFixed(2);
+        this.checkoutBox.classList.remove('d-none');
+    }
+
+
+    onClose() {
+        this.checkoutBox.classList.add('d-none');
+        this.checkoutList.innerHTML = '';
+    }
+}
+
 class ShoppingPage {
     constructor() {
         this.sliderBox = document.getElementById("sliderBox");
@@ -60,9 +103,15 @@ class ShoppingPage {
         this.subtotal = 0;
         this.cartTotal.innerText = "$0.00";
         this.cart = [];
+        this.checkout = new Checkout();
         this.populateSlider();
         this.populateTop();
         this.populateFeatured();
+        document.getElementById("checkoutButton").addEventListener("click", this.onCheckout.bind(this));
+    }
+
+    onCheckout() {
+        this.checkout.populateCart(this.cart);
     }
 
     populateSlider() {
