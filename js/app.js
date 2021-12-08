@@ -56,6 +56,8 @@ class ShoppingPage {
         this.topBox = document.getElementById("topBox");
         this.topItems = db.filter(e => e.top);
         this.featuredBox = document.getElementById("featuredBox");
+        this.cartTotal = document.getElementById("cartTotal");
+        this.cartTotal.innerText = "$0";
         this.cart = [];
         this.populateSlider();
         this.populateTop();
@@ -86,7 +88,7 @@ class ShoppingPage {
                     <img src="${e.img}" alt="${e.name}" class="img-fluid">
                     <figcaption>
                         ${e.name}
-                        <button>shop</button>
+                        <button>add to cart</button>
                     </figcaption>
                 </figure>`);
         });
@@ -101,7 +103,7 @@ class ShoppingPage {
                         ${e.name}
                         <div class="price">
                             ${e.price}
-                            <button data-id=${e.id}>buy now</button>
+                            <button data-id=${e.id}>add to cart</button>
                         </div>
                     </figcaption>
                 </figure>
@@ -111,8 +113,26 @@ class ShoppingPage {
         });
     }
 
+    /*
+     * If the item is not in the cart, push the item to the cart.
+     * If the item is in the cart, increment the quantity.
+     */
     addItem(event) {
-        console.log(`clicked ${event.target.dataset.id}`);
+        let id = event.target.dataset.id;
+        let dupe = this.cart.filter((e) => e.id === id);
+        switch (dupe.length) {
+            case 0:
+                this.cart.push({id: id, qty: 1});
+                break;
+            case 1:
+                this.cart.forEach((e) => {
+                    if (e.id === id) e.qty++;
+                });
+                break;
+            default:
+                console.log("error in addItem: multiple duplicates in cart.");
+                break;
+        }
     }
 }
 
